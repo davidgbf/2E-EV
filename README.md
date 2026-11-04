@@ -22,19 +22,6 @@ The framework redesigns municipal solid waste (MSW) reverse logistics networks b
 
 The pipeline was benchmarked against the single-echelon diesel baseline across **37 real-world municipal street networks** in the State of Tocantins, Brazil.
 
-┌────────────────────────────────────────────────────────────────────────────────────────┐
-│                                 DECISION PIPELINE                                      │
-├─────────────────────┬──────────────────────┬────────────────────┬──────────────────────┤
-│  Phase I: Data      │  Phase II & III:     │  Phase IV & V:     │  Phase VI:           │
-│  Mining & GBM       │  Baseline & Arc-     │  ALNS Warm-Start & │  Physics Recalculation│
-│  Simulation         │  Districting         │  Branch-and-Cut    │  & DCF Economics     │
-│                     │                      │                    │                      │
-│ • OSMnx topology    │ • Clarke-Wright      │ • Regret-k ALNS    │ • WTW LCA Emissions  │
-│ • Overture Maps     │   Baseline           │ • Sector sub-MILPs │ • Phased 10-Yr CAPEX │
-│ • Moran's I test    │ • Priority Queue     │ • Lazy DFJ cuts    │ • Circular Economy   │
-│ • Monte Carlo GBM   │ • Topological contig.│ • Minimax Equity   │ • EVPI Hedge proxy   │
-└─────────────────────┴──────────────────────┴────────────────────┴──────────────────────┘
-
 ---
 
 ## ✨ Key Features & Methodological Innovations
@@ -44,23 +31,6 @@ The pipeline was benchmarked against the single-echelon diesel baseline across *
 3. **Branch-and-Cut accelerated by ALNS:** Generates high-quality warm starts via an Adaptive Large Neighborhood Search metaheuristic and dynamically injects exponential Dantzig-Fulkerson-Johnson (DFJ) subtour elimination constraints via solver callbacks.
 4. **Thermodynamic Payload-Dependent Energy Physics:** Disaggregates tare and payload continuous consumption for both electric and conventional fleets, evaluated under a Well-to-Wheel (WTW) Life-Cycle Assessment calibrated to the Brazilian hydroelectric grid.
 5. **Equity & Environmental Justice:** Integrates a scenario-pooled minimax equity constraint bounding the worst-case EV round-trip distance, verified via post-optimality Pareto duality approximations.
-
----
-
-## 🗂 Repository Structure
-
-├── data/
-│   ├── municipios_data.txt          # Demographic, waste, and spatial bounding boxes for 37 cities
-│   └── cache/                       # Cached OSMnx graphs (.graphml) and building footprints (.gpkg)
-├── src/
-│   ├── open_lrp_new_33_0_tocantins.py # Main monolithic execution script
-│   └── modules/                     # Modular components (ALNS, districting, physics, DCF)
-├── instances/                       # Extracted municipal benchmark graph instances
-├── results/                         # Output Excel sheets (Executive Summary, Deployment, EVPI)
-├── figures/                         # High-resolution generated analytical panels (1 to 5)
-├── requirements.txt                 # Python dependencies
-├── LICENSE                          # MIT License
-└── README.md                        # Documentation
 
 ---
 
@@ -139,20 +109,6 @@ When executed, the pipeline exports 5 publication-ready, 300-DPI multi-panel gra
 3. **`Panel_3_Topologies.png`:** Comparative routing topologies (Baseline single-echelon door-to-door vs. 2E-EV Hamiltonian compactor tours and EV capillary allocations).
 4. **`Panel_4_Profit_Carbon.png`:** Operating cash flow breakdown and Cap-and-Trade carbon penalty surplus/deficit dynamics.
 5. **`Panel_5_BiLevel_Economics.png`:** Circular economy diversion sensitivity, Equity vs. Profit Pareto frontiers, and decadal Payback/Break-even cash curves.
-
----
-
-## 📜 Citation
-
-If you use this framework, dataset, or code in your research, please cite our paper:
-
-@article{Franco2026_2ELRP,
-  author    = {David Gabriel de Barros Franco and Thiago Alves de Queiroz and Giulia Caselli and Manuel Iori},
-  title     = {A Two-Echelon Stochastic Location-Routing Problem with Fleet Electrification for Sustainable and Equitable Waste Management: A Case Study in Brazil},
-  journal   = {Transportation Research Part D: Transport and Environment},
-  year      = {2026},
-  note      = {Special Issue: Electrifying heavy-duty trucks and buses}
-}
 
 ---
 
